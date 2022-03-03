@@ -1,0 +1,3 @@
+# Django + React
+
+### Practice project
