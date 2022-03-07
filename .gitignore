@@ -6,6 +6,10 @@ __pycache__
 db.sqlite3
 media
 
+
+#credentials
+spotify/credentials.py
+
 # Backup files # 
 *.bak 
 

@@ -134,7 +134,12 @@ class CurrentSong(APIView):
 BASE_URL = "https://api.spotify.com/v1/me/"
 
 def get_response_spotify_api(session_id, endpoint, post_= False, put_= False):
-    tokens = SpotifyToken.objects.filter(user = session_id)[0]
+    tokens = SpotifyToken.objects.filter(user = session_id)
+    if tokens.exists():
+        tokens = tokens[0]
+    else:
+        return {'error': 'Request error'}
+
     headers = {'Content-Type': 'application/json',
                'Authorization': "Bearer " + tokens.access_token}
     # print(headers)
