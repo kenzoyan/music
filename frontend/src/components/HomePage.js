@@ -27,12 +27,11 @@ export default class HomePage extends Component {
 
   async componentDidMount(){
     fetch('api/user-in-room')
-    .then(res => res.json())
-      .then(data => { this.setState({
+    .then((res) => res.json())
+      .then((data) => { this.setState({
         roomcode: data.code,
       })
       //console.log(data)
-      ;
     });
   }
 

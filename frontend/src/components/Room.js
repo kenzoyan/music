@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import {useParams, useNavigate } from 'react-router-dom';
 import { Grid, Button, Typography } from "@material-ui/core";
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+
 import CreateRoomPage from './CreateRoomPage';
+import MusicPlayer from './MusicPlayer';
 
 function withParamsAndNavigate(Component) {
   return props => <Component {...props} params={useParams()} navigate={useNavigate()} />;
@@ -19,6 +23,7 @@ class Room extends Component {
             is_host:false,
             showSetting:false,
             spotifyAuth:false,
+            song:{},
         };
         //console.log( this.props)
         this.roomcode = this.props.params.roomcode
@@ -28,9 +33,20 @@ class Room extends Component {
         this.updateShowSetting = this.updateShowSetting.bind(this)
         this.authSpotify = this.authSpotify.bind(this)
         this.getRoomDetails = this.getRoomDetails.bind(this)
+        this.getCurrentSong = this.getCurrentSong.bind(this)
         this.getRoomDetails();
-    }
+        this.getCurrentSong();
   
+    }
+    
+    componentDidMount(){
+      this.interval = setInterval(this.getCurrentSong,5000)
+    }
+
+    componentWillUnmount(){
+      clearInterval(this.interval)
+    }
+
     getRoomDetails(){
         fetch('/api/get-room' + "?code=" + this.roomcode)
         .then((response) => {
@@ -65,6 +81,22 @@ class Room extends Component {
             window.location.replace(data.url);
           });
         }
+      })
+    }
+
+    getCurrentSong(){
+      fetch('/spotify/current-song')
+      .then((response) =>{
+        if (!response.ok){
+          return {'error':'resposne error'}
+        } else {
+          return response.json();
+        }
+      }).then((data)=>{
+        this,this.setState({
+          song:data
+        })
+        console.log('Current Song: ', data)
       })
     }
 
@@ -133,22 +165,15 @@ class Room extends Component {
           <Grid container spacing={1}>
           <Grid item xs={12} align="center">
             <Typography variant="h4" component="h4">
-              Code: {this.roomcode}
+              {this.roomcode}
             </Typography>
+
+          <MusicPlayer {...this.state.song}/>
           </Grid>
+
           <Grid item xs={12} align="center">
-            <Typography variant="h6" component="h6">
-              Votes: {this.state.votes_to_skip}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} align="center">
-            <Typography variant="h6" component="h6">
-              Guest Can Pause: {this.state.guest_pause.toString()}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} align="center">
-            <Typography variant="h6" component="h6">
-              Host: {this.state.is_host.toString()}
+            <Typography variant="h6" component="subtitle2">
+              Guest Control  {this.state.guest_pause? <CheckBoxIcon />: <CheckBoxOutlineBlankIcon/>}
             </Typography>
           </Grid>
           {this.state.is_host && this.renderSettingButton()}
