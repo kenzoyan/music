@@ -1,72 +1,60 @@
-import React, { Component } from 'react'
+import React, { useState, } from 'react'
 
 import {Button, Grid, Typography, TextField } from '@material-ui/core'
 import {Link, useNavigate} from 'react-router-dom'
 
-function withNavigate(Component) {
-  return props => <Component {...props} navigate={useNavigate()} />;
-}
 
- class RoomJoinPage extends Component {
-    constructor(props){
-        super(props);
-        this.state = {
-          roomcode: "",
-          error: '',
-        }
-        this.handleEnterRoomButtonPressed = this.handleEnterRoomButtonPressed.bind(this)
-        this.handleTextInput = this.handleTextInput.bind(this)
+
+export default function RoomJoinPage(props) {
+    const [roomcode,setRoomcode] = useState('')
+    const [error, setError] = useState('')
+
+
+    function handleTextInput(e){
+      setRoomcode(e.target.value)
     }
 
-    handleTextInput(e){
-      this.setState({
-        roomcode:e.target.value
-      })
-    }
+    function handleEnterRoomButtonPressed(){
 
-    handleEnterRoomButtonPressed(){
-      console.log('this.state.roomcode', this.state.roomcode)
+      console.log('this.state.roomcode', roomcode)
       const requestOptions = {
         method:'POST',
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-          code:this.state.roomcode,
+          code:roomcode,
         }),
       };
       fetch("/api/join-room" , requestOptions)
       .then((response) => {
         console.log('response.ok', response.ok)
         if (response.ok) {
-          this.props.navigate(`/room/${this.state.roomcode}`);
-          console.log('Go to room ', this.state.roomcode )  // ???
+          useNavigate(`/room/${roomcode}`);
+          console.log('Go to room ', roomcode ) 
         } else {
-          this.setState({
-            error: 'Room Not Found 404'
-          })
+            setError('Room Not Found 404')          
         }
       })
       .catch((error)=> console.log('error', error))
       
     }
 
-  render() {
     return (
-      <Grid container spacing={1}>
+      <Grid container spacing={1} className='container'>
           <Grid item xs={12} align='center'>
-            <Typography componment='h3' variant='h3'>
+            <Typography componment='h4' variant='h4'>
               Join a Room
               </Typography>
             </Grid>
 
             <Grid item xs={12} align='center'>
             <TextField
-              error={!!this.state.error}
+              error={!!error}
               label='Code'
               placeholder='Enter Your Room Code'
-              value={this.state.roomcode}
-              helperText={this.state.error}
+              value={roomcode}
+              helperText={error}
               variant='outlined'
-              onChange={this.handleTextInput}
+              onChange={(e) => handleTextInput(e)}
             />
             </Grid>
 
@@ -74,7 +62,7 @@ function withNavigate(Component) {
             <Button
               color='primary'
               variant='contained'
-              onClick={this.handleEnterRoomButtonPressed}
+              onClick={()=> handleEnterRoomButtonPressed()}
             >
               Enter Room
               </Button>
@@ -91,7 +79,4 @@ function withNavigate(Component) {
             </Grid>
       </Grid>
     )
-  }
 }
-
-export default withNavigate(RoomJoinPage);

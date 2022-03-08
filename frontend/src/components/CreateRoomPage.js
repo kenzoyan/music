@@ -160,7 +160,7 @@ function withNavigate(Component) {
     const title = this.props.update ? "Update Room" : "Create a Room";
 
     return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} className='container'>
           {this.renderAlert()}
           
           <Grid item xs={12} align='center'>

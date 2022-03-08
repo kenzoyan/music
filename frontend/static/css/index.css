@@ -4,6 +4,12 @@ html, body {
     padding: 0;
 }
 
+body {
+    background: url(https://picsum.photos/600/800);
+    background-repeat: repeat-x;
+  }
+
+
 #main {
     position: fixed;
     width: 100%;
@@ -23,4 +29,12 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
+}
+
+.container{
+    background-color: #F0FFF0;
+}
+
+.title{
+    color: #556B2F;
 }

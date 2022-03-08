@@ -51,7 +51,6 @@ class Room extends Component {
         fetch('/api/get-room' + "?code=" + this.roomcode)
         .then((response) => {
             if (!response.ok) {
-                this.props.leaveRoomCallback();
                 this.props.navigate("/");
               }
               return response.json();
@@ -106,14 +105,13 @@ class Room extends Component {
             headers: { "Content-Type": "application/json" },
           };
           fetch("/api/leave-room", requestOptions).then((_response) => {
-            this.props.leaveRoomCallback();
             console.log('Go to homepage',)
             this.props.navigate("/");
           });
     }
     renderSetting(){
       return (
-        <Grid container spacing={1}>
+        <Grid container spacing={1} className='container'>
           <Grid item xs={12} align="center">
             <CreateRoomPage 
               update={true}
@@ -145,7 +143,7 @@ class Room extends Component {
 
     renderSettingButton(){
       return(
-        <Grid item xs={12} align="center">
+        <Grid item xs={12} align="center" className='container'>
         <Button
             variant="contained"
             color="primary"
@@ -162,17 +160,17 @@ class Room extends Component {
         return this.renderSetting()
       } else {
         return (
-          <Grid container spacing={1}>
+          <Grid container spacing={1} className='container' >
           <Grid item xs={12} align="center">
-            <Typography variant="h4" component="h4">
+            <Typography variant="h4" component="h4" className='title'>
               {this.roomcode}
             </Typography>
 
-          <MusicPlayer {...this.state.song}/>
+          <MusicPlayer {...this.state.song} />
           </Grid>
 
           <Grid item xs={12} align="center">
-            <Typography variant="h6" component="subtitle2">
+            <Typography variant="h6" component="h4" className='title'>
               Guest Control  {this.state.guest_pause? <CheckBoxIcon />: <CheckBoxOutlineBlankIcon/>}
             </Typography>
           </Grid>

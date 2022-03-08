@@ -75,7 +75,7 @@ class CurrentSong(APIView):
         roomcode = self.request.session.get('room_code')
         room = Room.objects.filter(code=roomcode)
 
-        if room.exists:
+        if room.exists():
             room = room[0]
         else:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
@@ -101,7 +101,7 @@ class CurrentSong(APIView):
         
         for i, person in enumerate(item.get('artists')):
             if i > 0:
-                artists_name += '&'
+                artists_name += ' & '
             name = person.get('name')
             artists_name += name
         

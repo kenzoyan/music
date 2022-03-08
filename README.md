@@ -1,5 +1,12 @@
 # Django + React
 
+# Demo Gif
+
+# Introduction
+
+This is a project for ...
+
+
 ### Practice project
 
 - Day 1 : set up project; intergration of Django & React
@@ -8,4 +15,4 @@
 - Day 4 :  Updpate Room info ; Connect Spotify web API;
 - Day 5 : get current song info; pause/play; vote to skip
 
-- Problem:  functional based structure may be better, change to hooks later
+- Partily changed to function based structure.
