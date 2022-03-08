@@ -19,25 +19,22 @@ export default function HomePage(props) {
 
   const [roomcode, setRoomcode] =useState(null)
 
-  useEffect(()=>{
-    fetch('api/user-in-room')
-    .then((res) => res.json())
-      .then((data) => {setRoomcode(data.code)});
-    return () => setRoomcode(null)
-  },[roomcode])
+  // useEffect(()=>{
+  //   fetch('api/user-in-room')
+  //   .then((res) => res.json())
+  //     .then((data) => {setRoomcode(data.code)});
+  //   return () => setRoomcode(null)
+  // },[roomcode])
 
-  function clearRoomCode(){
-    useState(null)
-  }
 
 
   function RenderHomePage(){
     return roomcode ? (<Navigate to= {`/room/${roomcode}`}/>):
     (
-      <Grid container spacing={3}>
-      <Grid item xs={12} align="center">
-        <Typography variant="h3" component="h3">
-          House Party
+      <Grid container spacing={3} >
+      <Grid item xs={12} align="center" >
+        <Typography variant="h3" component="h3" className='title'>
+          Music Control
         </Typography>
       </Grid>
       <Grid item xs={12} align="center">

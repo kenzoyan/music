@@ -218,7 +218,7 @@ def refresh__account_token(session_id):
     token_type = response.get('token_type')
     expires_in = response.get('expires_in')
     refresh_token = response.get('refresh_token')
-
+    print(response)
     expires_in = timezone.now() + timedelta(seconds=expires_in)
 
     if refresh_token:  #  refresh_token might be returned

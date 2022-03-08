@@ -1,4 +1,4 @@
-import React, { useState, } from 'react'
+import React, { useEffect, useState, } from 'react'
 
 import {Button, Grid, Typography, TextField } from '@material-ui/core'
 import {Link, useNavigate} from 'react-router-dom'
@@ -9,11 +9,7 @@ export default function RoomJoinPage(props) {
     const [roomcode,setRoomcode] = useState('')
     const [error, setError] = useState('')
 
-
-    function handleTextInput(e){
-      setRoomcode(e.target.value)
-    }
-
+    const navigate = useNavigate();
     function handleEnterRoomButtonPressed(){
 
       console.log('this.state.roomcode', roomcode)
@@ -24,14 +20,15 @@ export default function RoomJoinPage(props) {
           code:roomcode,
         }),
       };
+
       fetch("/api/join-room" , requestOptions)
       .then((response) => {
         console.log('response.ok', response.ok)
         if (response.ok) {
-          useNavigate(`/room/${roomcode}`);
+          navigate(`/room/${roomcode}`);
           console.log('Go to room ', roomcode ) 
         } else {
-            setError('Room Not Found 404')          
+            setError('Room Not Found 404')         
         }
       })
       .catch((error)=> console.log('error', error))
@@ -39,9 +36,9 @@ export default function RoomJoinPage(props) {
     }
 
     return (
-      <Grid container spacing={1} className='container'>
+      <Grid container spacing={1} >
           <Grid item xs={12} align='center'>
-            <Typography componment='h4' variant='h4'>
+            <Typography componment='h4' variant='h4' className='title'>
               Join a Room
               </Typography>
             </Grid>
@@ -54,7 +51,7 @@ export default function RoomJoinPage(props) {
               value={roomcode}
               helperText={error}
               variant='outlined'
-              onChange={(e) => handleTextInput(e)}
+              onChange={(e) => setRoomcode(e.target.value)}
             />
             </Grid>
 

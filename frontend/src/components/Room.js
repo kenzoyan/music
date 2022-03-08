@@ -40,7 +40,7 @@ class Room extends Component {
     }
     
     componentDidMount(){
-      this.interval = setInterval(this.getCurrentSong,5000)
+      this.interval = setInterval(this.getCurrentSong,1000)
     }
 
     componentWillUnmount(){
@@ -111,7 +111,7 @@ class Room extends Component {
     }
     renderSetting(){
       return (
-        <Grid container spacing={1} className='container'>
+        <Grid container spacing={1} >
           <Grid item xs={12} align="center">
             <CreateRoomPage 
               update={true}
@@ -143,7 +143,7 @@ class Room extends Component {
 
     renderSettingButton(){
       return(
-        <Grid item xs={12} align="center" className='container'>
+        <Grid item xs={12} align="center" >
         <Button
             variant="contained"
             color="primary"
@@ -160,7 +160,7 @@ class Room extends Component {
         return this.renderSetting()
       } else {
         return (
-          <Grid container spacing={1} className='container' >
+          <Grid container spacing={1}  >
           <Grid item xs={12} align="center">
             <Typography variant="h4" component="h4" className='title'>
               {this.roomcode}

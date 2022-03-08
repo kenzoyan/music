@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import {Grid, Typography, Card, IconButton, LinearProgress} from "@material-ui/core";
 import PlayArrowIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
@@ -34,7 +34,7 @@ export default function MusicPlayer(props) {
 
     return (
       <Card>
-        <Grid container alignItems="center" className='container'>
+        <Grid container alignItems="center" >
             <Grid item align="center" xs={4}>
                 <img src={props.image_url} height="100%" width="100%" />
             </Grid>
