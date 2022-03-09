@@ -5,6 +5,7 @@ import {Button, Grid, Typography, TextField, FormHelperText,
 import {Link, useNavigate} from 'react-router-dom'
 
 import {Alert} from '@material-ui/lab'
+
 function withNavigate(Component) {
   return props => <Component {...props} navigate={useNavigate()} />;
 }
@@ -23,7 +24,7 @@ function withNavigate(Component) {
         super(props);
         this.state = {
           guest_pause: true,
-          votes_to_skip: this.defaultVotes,
+          votes_to_skip: 2,
           SuccessMsg:'',
           ErrorMsg:'',
         };
@@ -44,7 +45,7 @@ function withNavigate(Component) {
 
     handleGuestPauseChange(e){
       this.setState({
-        guest_pause:e.target.value === true? true:false
+        guest_pause:e.target.value
       });
     }
 
@@ -72,6 +73,7 @@ function withNavigate(Component) {
           code:this.props.roomcode,
         }),
       };
+
       fetch("/api/update-room" , requestOptions)
       .then((response) => {
         if (response.ok){
@@ -160,11 +162,11 @@ function withNavigate(Component) {
     const title = this.props.update ? "Update Room" : "Create a Room";
 
     return (
-        <Grid container spacing={1} className='container'>
+        <Grid container spacing={1} >
           {this.renderAlert()}
           
           <Grid item xs={12} align='center'>
-            <Typography componment='h3' variant='h3'>
+            <Typography componment='h3' variant='h3' className='title'>
               {title}
               </Typography>
           </Grid>
